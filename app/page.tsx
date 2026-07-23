@@ -4,6 +4,10 @@ import AboutSection from '@/components/pages/home/AboutSection'
 import UpcomingEvents from '@/components/pages/home/UpcomingEvents'
 import UpcomingEventsMobile from '@/components/pages/home/UpcomingEventsMobile'
 import ExploreUs from '@/components/pages/home/ExploreUs'
+import VerseOfTheDay from '@/components/pages/home/VerseOfTheDay'
+import StatsSection from '@/components/pages/home/StatsSection'
+import ImageCarousel from '@/components/pages/home/ImageCarousel'
+import Footer from '@/components/common/Footer'
 
 export default function Home() {
   return (
@@ -15,7 +19,12 @@ export default function Home() {
       </div>
       <AboutSection />
       <UpcomingEventsMobile />
+      <VerseOfTheDay />
       <ExploreUs />
+      
+      <StatsSection />
+      <ImageCarousel />
+      <Footer />
     </main>
   )
 }

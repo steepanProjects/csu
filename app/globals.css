@@ -34,8 +34,7 @@ body {
 
 .animate-marquee {
   display: inline-flex;
-  animation: marquee 20s linear infinite;
-  /* duplicate content so it loops seamlessly */
+  animation: marquee 36s linear infinite;
   width: max-content;
 }
 
