@@ -99,7 +99,7 @@ export default function UpcomingEvents() {
         <div className="w-full h-full flex flex-col justify-between px-10 pt-10 pb-6 pointer-events-auto">
 
           {/* Heading */}
-          <h2 className="text-base font-bold text-stone-1000 text-center leading-tight pl-26 mt-8 transition-transform duration-300 ease-out origin-right group-hover:scale-120 group-hover:-translate-y-6">
+          <h2 className="text-base font-bold text-stone-1000 text-center leading-tight pl-12 mt-8 transition-transform duration-300 ease-out origin-right group-hover:scale-120 group-hover:-translate-y-6">
             Upcoming Events
           </h2>
 
@@ -128,10 +128,10 @@ export default function UpcomingEvents() {
               className="relative flex-shrink-0"
               style={{ width: '52px', height: `${ITEM_H * 3}px` }}
             >
-              {/* Fade top */}
-              <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              {/* Fade bottom */}
-              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Fade top — always visible */}
+              <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
+              {/* Fade bottom — always visible */}
+              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
 
               <div
                 ref={scrollRef}
@@ -145,7 +145,6 @@ export default function UpcomingEvents() {
                 <div style={{ minHeight: `${ITEM_H}px`, flexShrink: 0 }} />
 
                 {dates.map((date, i) => {
-                  const isSelected = i === selectedIndex
                   return (
                     <div
                       key={i}
@@ -156,21 +155,30 @@ export default function UpcomingEvents() {
                         scrollRef.current?.scrollTo({ top: i * ITEM_H, behavior: 'smooth' })
                       }}
                     >
-                      <div className={`flex flex-col items-center justify-center rounded-lg w-full py-1.5 transition-all duration-200 ${
-                        isSelected
-                          ? 'bg-[#7ed957] shadow-md'
-                          : 'bg-stone-100 opacity-0 group-hover:opacity-50 hover:!opacity-80'
-                      }`}>
-                        <span className={`text-xl font-bold leading-none ${isSelected ? 'text-white' : 'text-stone-800'}`}>
-                          {date.getDate()}
-                        </span>
-                        <span className={`text-[9px] font-semibold uppercase tracking-wider mt-0.5 ${isSelected ? 'text-white/80' : 'text-stone-500'}`}>
-                          {MONTHS[date.getMonth()]}
-                        </span>
-                        <span className={`text-[9px] ${isSelected ? 'text-white/70' : 'text-stone-400'}`}>
-                          {DAYS[date.getDay()]}
-                        </span>
-                      </div>
+                      {(() => {
+                        const dist = Math.abs(i - selectedIndex)
+                        const isSelected = dist === 0
+                        const isAdjacent = dist === 1
+                        if (!isSelected && !isAdjacent) return <div style={{ height: `${ITEM_H}px` }} />
+                        return (
+                          <div
+                            className={`flex flex-col items-center justify-center rounded-lg w-full py-1.5 transition-all duration-200 ${
+                              isSelected ? 'bg-[#7ed957] shadow-md' : 'bg-stone-100'
+                            }`}
+                            style={{ opacity: isSelected ? 1 : 0.45 }}
+                          >
+                            <span className={`text-xl font-bold leading-none ${isSelected ? 'text-white' : 'text-stone-800'}`}>
+                              {date.getDate()}
+                            </span>
+                            <span className={`text-[9px] font-semibold uppercase tracking-wider mt-0.5 ${isSelected ? 'text-white/80' : 'text-stone-500'}`}>
+                              {MONTHS[date.getMonth()]}
+                            </span>
+                            <span className={`text-[9px] ${isSelected ? 'text-white/70' : 'text-stone-400'}`}>
+                              {DAYS[date.getDay()]}
+                            </span>
+                          </div>
+                        )
+                      })()}
                     </div>
                   )
                 })}

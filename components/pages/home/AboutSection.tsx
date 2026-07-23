@@ -1,6 +1,6 @@
 export default function AboutSection() {
   return (
-    <section className="relative bg-white overflow-hidden">
+    <section id="about-section" className="relative bg-white overflow-hidden">
 
       {/* Main content */}
       <div className="mx-auto max-w-7xl px-6 lg:px-12">

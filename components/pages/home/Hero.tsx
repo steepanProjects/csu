@@ -1,19 +1,17 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import UpcomingEvents from './UpcomingEvents'
 
 export default function Hero() {
   return (
-    <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden">
-      {/* Background image */}
-      <Image
-        src="/hero.jpg"
-        alt="CSI Christ Church aerial view"
-        fill
-        priority
-        className="object-cover object-center"
-        sizes="100vw"
-      />
+    <section
+      className="relative h-[85vh] min-h-[600px] w-full overflow-hidden"
+      style={{
+        backgroundImage: "url('/hero.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
 
       {/* Dark gradient overlay — heavier on left for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/10" />

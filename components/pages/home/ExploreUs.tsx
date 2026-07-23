@@ -20,9 +20,14 @@ export default function ExploreUs() {
       const section = sectionRef.current
       if (!section) return
 
+      const navH = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--navbar-h') || '0'
+      )
+      const viewH = window.innerHeight - navH
       const { top, height } = section.getBoundingClientRect()
-      // progress goes 0 → 1 across the full scroll range of the section
-      const raw = -top / (height - window.innerHeight)
+      // Offset top by navbar height — section is locked below navbar
+      const scrolledIn = -(top - navH)
+      const raw = scrolledIn / (height - viewH)
       setScrollProgress(Math.max(0, Math.min(1, raw)))
     }
 
@@ -59,12 +64,13 @@ export default function ExploreUs() {
      * per slide. The sticky inner div locks to the viewport top.
      */
     <section
+      id="explore-us"
       ref={sectionRef}
       className="relative bg-[#faf7f4]"
       style={{ height: `${slides.length * 100}vh` }}
     >
       {/* Decorative leaf motif */}
-      <div className="sticky top-0 h-0 overflow-visible pointer-events-none select-none z-0">
+      <div className="sticky h-0 overflow-visible pointer-events-none select-none z-0" style={{ top: 'var(--navbar-h, 0px)' }}>
         <div className="absolute bottom-[-100vh] left-0 w-40 h-64 opacity-10">
           <svg viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-[#7ed957]">
             <path d="M80 250 Q80 180 60 130 Q40 80 20 40" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -82,7 +88,13 @@ export default function ExploreUs() {
       </div>
 
       {/* ── Sticky viewport ── */}
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col px-6 lg:px-16 py-10">
+      <div
+        className="sticky overflow-hidden flex flex-col px-6 lg:px-16 py-10"
+        style={{
+          top: 'var(--navbar-h, 0px)',
+          height: 'calc(100vh - var(--navbar-h, 0px))',
+        }}
+      >
 
         {/* ── Header — always locked at top ── */}
         <div className="relative z-10 max-w-7xl mx-auto w-full flex-shrink-0 mb-6">
@@ -94,11 +106,14 @@ export default function ExploreUs() {
                 Who Are We
               </span>
             </div>
-            {/* Title + subtitle */}
-            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8 mt-1">
+            {/* Title + subtitle stacked vertically */}
+            <div className="flex flex-col gap-1 mt-1">
               <h2 className="text-4xl font-bold text-stone-800 leading-tight">Explore Us</h2>
-              <p className="text-xs font-semibold tracking-widest uppercase text-stone-500 max-w-[200px] leading-relaxed">
-                CSI Christ Church Mathuvarayapuram Pastorate
+              <p className="text-xs font-semibold tracking-widest  uppercase text-stone-500 leading-relaxed">
+                CSI Union Church
+              </p>
+              <p className="text-xs font-semibold tracking-widest  uppercase text-stone-500 leading-relaxed">
+                Podanur Pastorate
               </p>
             </div>
           </div>
