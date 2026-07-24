@@ -21,9 +21,7 @@ const fellowshipDropdown = [
   { label: "Women's Fellowship", href: '/fellowships/womens-fellowship' },
   { label: 'Children Ministry', href: '/fellowships/children-ministry' },
   { label: 'Youth Fellowship',  href: '/fellowships/youth-fellowship'  },
-  { label: 'Choir',             href: '/fellowships/choir'             },
-  { label: 'Missionary',        href: '/fellowships/missionary'        },
-  { label: 'Social Services',   href: '/fellowships/social-services'   },
+  { label: 'Choir',             href: '/fellowships/choir'             }
 ]
 
 const eventsDropdown = [
@@ -86,7 +84,7 @@ export default function Navbar() {
       const navH = header.offsetHeight
 
       // Blur when the top of either trigger section reaches the navbar bottom
-      const triggerIds = ['about-section', 'explore-us']
+      const triggerIds = ['about-section', 'explore-us', 'page-hero', 'head']
       const triggered = triggerIds.some((id) => {
         const el = document.getElementById(id)
         if (!el) return false
@@ -117,7 +115,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.svg"
-            alt="CSI Christ Church logo"
+            alt="CSI Union Church logo"
             width={56}
             height={56}
             priority

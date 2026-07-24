@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
+import { useInView } from '@/hooks/useInView'
 
 function generateDates() {
   const today = new Date()
@@ -47,6 +48,7 @@ export default function UpcomingEventsMobile() {
   const [selectedIndex, setSelectedIndex] = useState(TODAY_INDEX)
   const scrollRef = useRef<HTMLDivElement>(null)
   const centreIndexRef = useRef(TODAY_INDEX)
+  const [sectionRef, visible] = useInView(0.1)
 
   useEffect(() => {
     const el = scrollRef.current
@@ -80,17 +82,34 @@ export default function UpcomingEventsMobile() {
   const event = EVENT_DATA[String(offset)] ?? null
 
   return (
-    <section className="lg:hidden bg-white px-6 py-10">
-      <h2 className="text-xl font-bold text-stone-800 mb-6">Upcoming Events</h2>
+    <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      className="lg:hidden bg-white px-6 py-10"
+    >
+      {/* Heading — fade + slide down */}
+      <h2
+        className="text-xl font-bold text-stone-800 mb-6 transition-all duration-600 ease-out"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(-16px)',
+        }}
+      >
+        Upcoming Events
+      </h2>
 
-      {/* Card: vertical date scroll on left, event details on right */}
-      <div className="rounded-2xl bg-stone-50 border border-stone-100 flex overflow-hidden" style={{ height: `${ITEM_H * 3}px` }}>
-
-        {/* Vertical date scroll column */}
+      {/* Card — fade + slide up */}
+      <div
+        className="rounded-2xl bg-stone-50 border border-stone-100 flex overflow-hidden transition-all duration-700 ease-out"
+        style={{
+          height: `${ITEM_H * 3}px`,
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(24px)',
+          transitionDelay: visible ? '100ms' : '0ms',
+        }}
+      >
+        {/* Vertical date scroll */}
         <div className="relative flex-shrink-0 bg-white border-r border-stone-100" style={{ width: '68px' }}>
-          {/* Fade top */}
           <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
-          {/* Fade bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
 
           <div
@@ -102,7 +121,6 @@ export default function UpcomingEventsMobile() {
               WebkitOverflowScrolling: 'touch',
             }}
           >
-            {/* Top spacer */}
             <div style={{ minHeight: `${ITEM_H}px`, flexShrink: 0 }} />
 
             {dates.map((date, i) => {
@@ -134,12 +152,11 @@ export default function UpcomingEventsMobile() {
               )
             })}
 
-            {/* Bottom spacer */}
             <div style={{ minHeight: `${ITEM_H}px`, flexShrink: 0 }} />
           </div>
         </div>
 
-        {/* Event details — right side, vertically centred */}
+        {/* Event details */}
         <div className="flex-1 flex items-center px-5">
           {event ? (
             <div className="flex flex-col gap-1.5">

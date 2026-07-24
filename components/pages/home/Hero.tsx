@@ -33,7 +33,7 @@ export default function Hero() {
       <div className="relative z-10 flex h-full flex-col justify-center px-8 lg:px-20 xl:px-28 pt-24">
         {/* Eyebrow label */}
         <p className="mb-3 text-xs font-semibold tracking-[0.3em] uppercase text-white/70">
-          CSI Christ Church
+          CSI Union Church
         </p>
 
         {/* Headline */}

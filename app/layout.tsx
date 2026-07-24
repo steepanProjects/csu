@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CSI Christ Church",
-  description: "CSI Christ Church Mathuvarayapuram Pastorate",
+  title: "CSI Union Church",
+  description: "CSI Union Church Podanur Pastorate",
 };
 
 export default function RootLayout({

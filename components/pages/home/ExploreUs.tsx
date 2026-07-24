@@ -66,26 +66,10 @@ export default function ExploreUs() {
     <section
       id="explore-us"
       ref={sectionRef}
-      className="relative bg-[#faf7f4]"
+      className="relative bg-[#f0f9ea]"
       style={{ height: `${slides.length * 100}vh` }}
     >
-      {/* Decorative leaf motif */}
-      <div className="sticky h-0 overflow-visible pointer-events-none select-none z-0" style={{ top: 'var(--navbar-h, 0px)' }}>
-        <div className="absolute bottom-[-100vh] left-0 w-40 h-64 opacity-10">
-          <svg viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-[#7ed957]">
-            <path d="M80 250 Q80 180 60 130 Q40 80 20 40" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <path d="M80 250 Q80 180 100 130 Q120 80 140 40" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            {[40,70,100,130,160,190].map((y, i) => (
-              <ellipse
-                key={i}
-                cx={80 - (i % 2 === 0 ? 18 : -18)} cy={y} rx="14" ry="8"
-                transform={`rotate(${i % 2 === 0 ? -30 : 30} ${80 - (i % 2 === 0 ? 18 : -18)} ${y})`}
-                stroke="currentColor" strokeWidth="1.5"
-              />
-            ))}
-          </svg>
-        </div>
-      </div>
+      {/* Decorative leaf motif — replaced with leaves.svg */}
 
       {/* ── Sticky viewport ── */}
       <div
@@ -95,6 +79,27 @@ export default function ExploreUs() {
           height: 'calc(100vh - var(--navbar-h, 0px))',
         }}
       >
+        {/* Leaf 1 — bottom-left, large */}
+        <img
+          src="/leaves.svg"
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 w-64 h-64 opacity-20 pointer-events-none select-none"
+          style={{ transform: 'rotate(20deg) translate(-20%, 25%)' }}
+        />
+        {/* Leaf 2 — bottom-left, smaller + flipped */}
+        <img
+          src="/leaves.svg"
+          aria-hidden="true"
+          className="absolute bottom-120 left-0 w-32 h-32 opacity-15 pointer-events-none select-none"
+          style={{ transform: ' scaleY(-1) translate(-10%, 30%)' }}
+        />
+        {/* Leaf 3 — bottom-right */}
+        <img
+          src="/leaves.svg"
+          aria-hidden="true"
+          className="absolute bottom-0 right-0 w-56 h-56 opacity-20 pointer-events-none select-none"
+          style={{ transform: 'rotate(-15deg) scaleX(-1) translate(20%, 20%)' }}
+        />
 
         {/* ── Header — always locked at top ── */}
         <div className="relative z-10 max-w-7xl mx-auto w-full flex-shrink-0 mb-6">

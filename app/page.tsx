@@ -19,11 +19,12 @@ export default function Home() {
       </div>
       <AboutSection />
       <UpcomingEventsMobile />
-      <VerseOfTheDay />
       <ExploreUs />
-      
-      <StatsSection />
       <ImageCarousel />
+      <StatsSection />
+      
+      
+      <VerseOfTheDay />
       <Footer />
     </main>
   )

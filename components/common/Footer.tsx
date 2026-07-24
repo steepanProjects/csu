@@ -12,7 +12,7 @@ export default function Footer() {
   const [email, setEmail] = useState('')
 
   return (
-    <footer className="relative bg-[#2a1f14] overflow-hidden">
+    <footer className="relative bg-[#0f2310] overflow-hidden">
 
       {/* Faint church interior photo overlay — purely decorative */}
       <div className="absolute inset-0 pointer-events-none select-none opacity-20"
@@ -22,8 +22,8 @@ export default function Footer() {
           backgroundPosition: 'center',
         }}
       />
-      {/* Dark scrim so text is readable */}
-      <div className="absolute inset-0 bg-[#2a1f14]/70 pointer-events-none" />
+      {/* Dark green scrim so text is readable */}
+      <div className="absolute inset-0 bg-[#0f2310]/75 pointer-events-none" />
 
       {/* ── Main content ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pt-14 pb-8">
@@ -35,11 +35,11 @@ export default function Footer() {
           <div className="lg:col-span-1 flex flex-col gap-5">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 w-fit">
-              <Image src="/logo.svg" alt="CSI Christ Church logo" width={44} height={44} className="drop-shadow-md" />
+              <Image src="/logo.svg" alt="CSI Union Church logo" width={44} height={44} className="drop-shadow-md" />
               <div className="flex flex-col leading-tight text-white">
                 <span className="text-[9px] font-semibold tracking-[0.25em] uppercase opacity-60">CSI</span>
                 <span className="text-lg font-bold tracking-wide">
-                  Christ<span className="text-[#7ed957]">✝</span>
+                  Union<span className="text-[#7ed957]">✝</span>
                 </span>
                 <span className="text-[9px] font-semibold tracking-[0.2em] uppercase opacity-60">Church</span>
               </div>
@@ -60,7 +60,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
-                <span className="leading-snug">Mathuvarayapuram,<br />Coimbatore 641 101</span>
+                <span className="leading-snug">Podanur,<br />Coimbatore 641 023</span>
               </div>
             </div>
 
@@ -152,7 +152,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="flex-shrink-0 bg-[#c8a97a] hover:bg-[#7ed957] text-white text-xs font-semibold px-4 py-2.5 transition-colors duration-200"
+                className="flex-shrink-0 bg-[#7ed957] hover:bg-[#5cb83a] text-white text-xs font-semibold px-4 py-2.5 transition-colors duration-200"
               >
                 Subscribe
               </button>
@@ -167,7 +167,7 @@ export default function Footer() {
           <p>
             © 2025{' '}
             <Link href="/" className="text-[#7ed957] hover:underline font-medium">
-              CSI Christ Church
+              CSI Union Church
             </Link>
             {' '}| All Right Reserved
           </p>
