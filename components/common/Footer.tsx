@@ -26,27 +26,27 @@ export default function Footer() {
       <div className="absolute inset-0 bg-[#0f2310]/75 pointer-events-none" />
 
       {/* ── Main content ── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 pt-14 pb-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 pt-10 sm:pt-14 pb-6 sm:pb-8">
 
         {/* Top grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 pb-10 border-b border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 pb-8 sm:pb-10 border-b border-white/10">
 
           {/* Col 1 — Brand + contact */}
-          <div className="lg:col-span-1 flex flex-col gap-5">
+          <div className="lg:col-span-1 flex flex-col gap-4 sm:gap-5 pb-8 border-b border-white/10 sm:border-b-0 sm:pb-0">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 w-fit">
-              <Image src="/logo.svg" alt="CSI Union Church logo" width={44} height={44} className="drop-shadow-md" />
+            <Link href="/" className="flex items-center gap-3 w-fit mx-auto sm:mx-0">
+              <Image src="/logo.svg" alt="CSI Union Church logo" width={40} height={40} className="drop-shadow-md sm:w-11 sm:h-11" />
               <div className="flex flex-col leading-tight text-white">
-                <span className="text-[9px] font-semibold tracking-[0.25em] uppercase opacity-60">CSI</span>
-                <span className="text-lg font-bold tracking-wide">
+                <span className="text-[8px] sm:text-[9px] font-semibold tracking-[0.25em] uppercase opacity-60">CSI</span>
+                <span className="text-base sm:text-lg font-bold tracking-wide">
                   Union<span className="text-[#7ed957]">✝</span>
                 </span>
-                <span className="text-[9px] font-semibold tracking-[0.2em] uppercase opacity-60">Church</span>
+                <span className="text-[8px] sm:text-[9px] font-semibold tracking-[0.2em] uppercase opacity-60">Church</span>
               </div>
             </Link>
 
             {/* Contact */}
-            <div className="flex flex-col gap-3 text-sm text-white/70">
+            <div className="flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm text-white/70 items-start mx-auto sm:mx-0">
               <a href="tel:+919181456846878" className="flex items-center gap-2 hover:text-[#7ed957] transition-colors">
                 {/* Phone icon */}
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
@@ -60,14 +60,14 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
-                <span className="leading-snug">Podanur,<br />Coimbatore 641 023</span>
+                <span className="leading-snug text-center sm:text-left">Podanur,<br />Coimbatore 641 023</span>
               </div>
             </div>
 
             {/* Social icons */}
-            <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-white/50 mb-3">Follow Us</p>
-              <div className="flex items-center gap-4">
+            <div className="mx-auto sm:mx-0">
+              <p className="text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-white/50 mb-2 sm:mb-3 text-center sm:text-left">Follow Us</p>
+              <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
                 {/* Facebook */}
                 <a href="#" aria-label="Facebook" className="text-white/60 hover:text-[#7ed957] transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -91,12 +91,12 @@ export default function Footer() {
           </div>
 
           {/* Col 2 — About Us links */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-5">About Us</h4>
-            <ul className="flex flex-col gap-3">
+          <div className="text-center sm:text-left pb-6 border-b border-white/10 sm:border-b-0 sm:pb-0">
+            <h4 className="text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-5 uppercase tracking-wider">About Us</h4>
+            <ul className="flex flex-col gap-2.5 sm:gap-3 items-center sm:items-start">
               {aboutLinks.map((label) => (
                 <li key={label}>
-                  <Link href="#" className="text-sm text-white/60 hover:text-[#7ed957] transition-colors">
+                  <Link href="#" className="text-xs sm:text-sm text-white/60 hover:text-[#7ed957] transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -105,12 +105,12 @@ export default function Footer() {
           </div>
 
           {/* Col 3 — Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-5">Links</h4>
-            <ul className="flex flex-col gap-3">
+          <div className="text-center sm:text-left pb-6 border-b border-white/10 sm:border-b-0 sm:pb-0">
+            <h4 className="text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-5 uppercase tracking-wider">Links</h4>
+            <ul className="flex flex-col gap-2.5 sm:gap-3 items-center sm:items-start">
               {quickLinks.map((label) => (
                 <li key={label}>
-                  <Link href="#" className="text-sm text-white/60 hover:text-[#7ed957] transition-colors">
+                  <Link href="#" className="text-xs sm:text-sm text-white/60 hover:text-[#7ed957] transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -119,12 +119,12 @@ export default function Footer() {
           </div>
 
           {/* Col 4 — Support */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-5">Support</h4>
-            <ul className="flex flex-col gap-3">
+          <div className="text-center sm:text-left pb-6 border-b border-white/10 sm:border-b-0 sm:pb-0">
+            <h4 className="text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-5 uppercase tracking-wider">Support</h4>
+            <ul className="flex flex-col gap-2.5 sm:gap-3 items-center sm:items-start">
               {supportLinks.map((label) => (
                 <li key={label}>
-                  <Link href="#" className="text-sm text-white/60 hover:text-[#7ed957] transition-colors">
+                  <Link href="#" className="text-xs sm:text-sm text-white/60 hover:text-[#7ed957] transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -133,14 +133,14 @@ export default function Footer() {
           </div>
 
           {/* Col 5 — Newsletter */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-2">Subscribe Newsletter</h4>
-            <p className="text-xs text-white/50 mb-4 leading-relaxed">
+          <div className="text-center sm:text-left">
+            <h4 className="text-xs sm:text-sm font-semibold text-white mb-2 uppercase tracking-wider">Subscribe Newsletter</h4>
+            <p className="text-[10px] sm:text-xs text-white/50 mb-3 sm:mb-4 leading-relaxed max-w-xs mx-auto sm:mx-0">
               Subscribe our newsletter to get the latest news and updates!
             </p>
             <form
               onSubmit={(e) => { e.preventDefault(); setEmail('') }}
-              className="flex items-center rounded-full overflow-hidden bg-white/10 border border-white/15 focus-within:border-[#7ed957]/60 transition-colors"
+              className="flex items-center rounded-full overflow-hidden bg-white/10 border border-white/15 focus-within:border-[#7ed957]/60 transition-colors max-w-xs mx-auto sm:mx-0"
             >
               <input
                 type="email"
@@ -148,32 +148,32 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email..."
                 required
-                className="flex-1 bg-transparent px-4 py-2.5 text-xs text-white placeholder-white/40 outline-none min-w-0"
+                className="flex-1 bg-transparent px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs text-white placeholder-white/40 outline-none min-w-0"
               />
               <button
                 type="submit"
-                className="flex-shrink-0 bg-[#7ed957] hover:bg-[#5cb83a] text-white text-xs font-semibold px-4 py-2.5 transition-colors duration-200"
+                className="flex-shrink-0 bg-[#7ed957] hover:bg-[#5cb83a] text-white text-[11px] sm:text-xs font-semibold px-3 sm:px-4 py-2 sm:py-2.5 transition-colors duration-200"
               >
                 Subscribe
               </button>
             </form>
-            <p className="mt-2 text-[10px] text-white/30">* Your email is kept private</p>
+            <p className="mt-2 text-[9px] sm:text-[10px] text-white/30 max-w-xs mx-auto sm:mx-0">* Your email is kept private</p>
           </div>
 
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 text-xs text-white/30">
-          <p>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 pt-5 sm:pt-6 text-[10px] sm:text-xs text-white/30">
+          <p className="text-center sm:text-left">
             © 2025{' '}
             <Link href="/" className="text-[#7ed957] hover:underline font-medium">
               CSI Union Church
             </Link>
             {' '}| All Right Reserved
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <Link href="#" className="hover:text-white/60 transition-colors">Terms</Link>
-            <Link href="#" className="hover:text-white/60 transition-colors">Privacy policy</Link>
+            <Link href="#" className="hover:text-white/60 transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-white/60 transition-colors">Developer</Link>
           </div>
         </div>

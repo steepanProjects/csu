@@ -9,7 +9,6 @@ export default function VerseOfTheDay() {
     <section
       ref={ref as React.RefObject<HTMLElement>}
       className="relative w-full overflow-hidden bg-[#e8f5e0]"
-      style={{ minHeight: '140px' }}
     >
       {/* Faint background illustration */}
       <div className="absolute inset-0 pointer-events-none select-none opacity-[0.12]">
@@ -41,9 +40,57 @@ export default function VerseOfTheDay() {
         </svg>
       </div>
 
-      {/* Content row — fade in */}
+      {/* Mobile Layout */}
       <div
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 flex items-center justify-between gap-8 py-8 min-h-[140px] transition-all duration-700 ease-out"
+        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-16 py-6 md:py-8 transition-all duration-700 ease-out md:hidden"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        }}
+      >
+        {/* Verse label at top */}
+        <div className="text-center mb-4">
+          <span
+            className="text-[#4a8a2a] inline-block"
+            style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontStyle: 'italic', fontSize: '1.1rem', lineHeight: '1.3' }}
+          >
+            Verse of the Day
+          </span>
+        </div>
+
+        <div className="h-px w-full bg-[#7ed957] opacity-30 mb-4" />
+
+        {/* Verse content */}
+        <div className="text-center mb-4">
+          <p className="text-stone-700 text-sm leading-relaxed font-light max-w-md mx-auto">
+            The law of the&nbsp;
+            <span className="font-medium text-stone-800">LORD</span>
+            &nbsp;is perfect, converting the soul: the testimony of the&nbsp;
+            <span className="font-medium text-stone-800">LORD</span>
+            &nbsp;is sure, making wise the simple.
+          </p>
+          <p className="mt-3 text-xs font-semibold tracking-widest uppercase text-[#4a8a2a]">
+            Psalm 19:7
+          </p>
+        </div>
+
+        <div className="h-px w-full bg-[#7ed957] opacity-30 mb-4" />
+
+        {/* Donate button */}
+        <div className="text-center">
+          <a
+            href="#donate"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#7ed957] text-[#4a8a2a] text-sm font-medium hover:bg-[#7ed957] hover:border-[#7ed957] hover:text-white transition-all duration-300"
+          >
+            Donate Now
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-16 hidden md:flex items-center justify-between gap-8 py-8 min-h-[140px] transition-all duration-700 ease-out"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(20px)',

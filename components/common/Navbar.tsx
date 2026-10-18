@@ -83,15 +83,19 @@ export default function Navbar() {
     const onScroll = () => {
       const navH = header.offsetHeight
 
-      // Blur when the top of either trigger section reaches the navbar bottom
+      // Blur when scrolled down more than navbar height OR when specific sections are reached
+      const scrollThreshold = navH * 0.8 // Trigger at 80% of navbar height
+      const scrollTriggered = window.scrollY > scrollThreshold
+
+      // Also check for specific trigger sections (for hero sections, etc.)
       const triggerIds = ['about-section', 'explore-us', 'page-hero', 'head']
-      const triggered = triggerIds.some((id) => {
+      const sectionTriggered = triggerIds.some((id) => {
         const el = document.getElementById(id)
         if (!el) return false
         return el.getBoundingClientRect().top <= navH
       })
 
-      setScrolled(triggered)
+      setScrolled(scrollTriggered || sectionTriggered)
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -104,12 +108,15 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header ref={headerRef} className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-      scrolled
-        ? 'bg-white/30 backdrop-blur-md shadow-sm'
-        : 'bg-transparent'
-    }`}>
-      <nav className="mx-auto flex items-center justify-between px-6 py-4 lg:px-12">
+    <header ref={headerRef} className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${menuOpen ? 'rounded-b-2xl' : ''}`}>
+      {/* Unified blur background for entire header */}
+      <div className={`absolute inset-0 transition-all duration-300 ${
+        scrolled || menuOpen
+          ? 'bg-white/30 backdrop-blur-md shadow-sm'
+          : 'bg-transparent'
+      } ${menuOpen ? 'rounded-b-2xl' : ''}`} />
+      
+      <nav className="relative mx-auto flex items-center justify-between px-6 py-4 lg:px-12">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
@@ -121,7 +128,7 @@ export default function Navbar() {
             priority
             className="drop-shadow-md"
           />
-          <div className={`flex flex-col leading-tight transition-colors duration-300 ${scrolled ? 'text-stone-800' : 'text-white'}`}>
+          <div className={`flex flex-col leading-tight transition-colors duration-300 ${scrolled || menuOpen ? 'text-stone-800' : 'text-white'}`}>
             <span className="text-[10px] font-semibold tracking-[0.25em] uppercase opacity-70">CSI</span>
             <span className="text-xl font-bold tracking-wide">
               Union<span className="text-[#7ed957]">✝</span>
@@ -337,102 +344,142 @@ export default function Navbar() {
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
         >
-          <span className={`block h-0.5 w-6 transition-all duration-200 ${scrolled ? 'bg-stone-800' : 'bg-white'} ${menuOpen ? 'translate-y-2 rotate-45' : ''}`} />
-          <span className={`block h-0.5 w-6 transition-all duration-200 ${scrolled ? 'bg-stone-800' : 'bg-white'} ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block h-0.5 w-6 transition-all duration-200 ${scrolled ? 'bg-stone-800' : 'bg-white'} ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`} />
+          <span className={`block h-0.5 w-6 transition-all duration-200 ${scrolled || menuOpen ? 'bg-stone-800' : 'bg-white'} ${menuOpen ? 'translate-y-2 rotate-45' : ''}`} />
+          <span className={`block h-0.5 w-6 transition-all duration-200 ${scrolled || menuOpen ? 'bg-stone-800' : 'bg-white'} ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-0.5 w-6 transition-all duration-200 ${scrolled || menuOpen ? 'bg-stone-800' : 'bg-white'} ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`} />
         </button>
       </nav>
 
       {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-black/90 backdrop-blur-sm px-6 pb-6">
-          <ul className="flex flex-col gap-4 text-sm font-medium text-white pt-2">
+      <div 
+        className={`md:hidden relative overflow-hidden transition-all duration-300 ease-in-out ${
+          menuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-6 pb-6">
+          <ul className="flex flex-col gap-4 text-sm font-semibold text-stone-900 pt-4">
             {navLinks.map((link) => {
               if (link.key === 'about') return (
                 <li key={link.href}>
-                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => setMobileAbout((v) => !v)}>
+                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => {
+                    setMobileAbout((v) => !v)
+                    setMobileHistory(false)
+                    setMobileFellowship(false)
+                    setMobileEvents(false)
+                  }}>
                     {link.label}
-                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-200 ${mobileAbout ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 ${mobileAbout ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  {mobileAbout && (
-                    <ul className="mt-2 ml-4 flex flex-col gap-3 border-l border-white/20 pl-4">
+                  <div 
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      mobileAbout ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <ul className="ml-4 flex flex-col gap-3 border-l-2 border-stone-700/40 pl-4">
                       {aboutDropdown.map((item) => (
                         <li key={item.href}>
-                          <Link href={item.href} className="text-white/70 hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileAbout(false) }}>
+                          <Link href={item.href} className="text-stone-800 font-medium hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileAbout(false) }}>
                             {item.label}
                           </Link>
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </div>
                 </li>
               )
 
               if (link.key === 'history') return (
                 <li key={link.href}>
-                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => setMobileHistory((v) => !v)}>
+                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => {
+                    setMobileHistory((v) => !v)
+                    setMobileAbout(false)
+                    setMobileFellowship(false)
+                    setMobileEvents(false)
+                  }}>
                     {link.label}
-                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-200 ${mobileHistory ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 ${mobileHistory ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  {mobileHistory && (
-                    <ul className="mt-2 ml-4 flex flex-col gap-3 border-l border-white/20 pl-4">
+                  <div 
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      mobileHistory ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <ul className="ml-4 flex flex-col gap-3 border-l-2 border-stone-700/40 pl-4">
                       {historyDropdown.map((item) => (
                         <li key={item.href}>
-                          <Link href={item.href} className="text-white/70 hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileHistory(false) }}>
+                          <Link href={item.href} className="text-stone-800 font-medium hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileHistory(false) }}>
                             {item.label}
                           </Link>
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </div>
                 </li>
               )
 
               if (link.key === 'fellowship') return (
                 <li key={link.href}>
-                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => setMobileFellowship((v) => !v)}>
+                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => {
+                    setMobileFellowship((v) => !v)
+                    setMobileAbout(false)
+                    setMobileHistory(false)
+                    setMobileEvents(false)
+                  }}>
                     {link.label}
-                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-200 ${mobileFellowship ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 ${mobileFellowship ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  {mobileFellowship && (
-                    <ul className="mt-2 ml-4 flex flex-col gap-3 border-l border-white/20 pl-4">
+                  <div 
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      mobileFellowship ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <ul className="ml-4 flex flex-col gap-3 border-l-2 border-stone-700/40 pl-4">
                       {fellowshipDropdown.map((item) => (
                         <li key={item.href}>
-                          <Link href={item.href} className="text-white/70 hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileFellowship(false) }}>
+                          <Link href={item.href} className="text-stone-800 font-medium hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileFellowship(false) }}>
                             {item.label}
                           </Link>
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </div>
                 </li>
               )
 
               if (link.key === 'events') return (
                 <li key={link.href}>
-                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => setMobileEvents((v) => !v)}>
+                  <button className="flex items-center gap-1 w-full hover:text-[#7ed957] transition-colors duration-200" onClick={() => {
+                    setMobileEvents((v) => !v)
+                    setMobileAbout(false)
+                    setMobileHistory(false)
+                    setMobileFellowship(false)
+                  }}>
                     {link.label}
-                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-200 ${mobileEvents ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <svg className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 ${mobileEvents ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  {mobileEvents && (
-                    <ul className="mt-2 ml-4 flex flex-col gap-3 border-l border-white/20 pl-4">
+                  <div 
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      mobileEvents ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <ul className="ml-4 flex flex-col gap-3 border-l-2 border-stone-700/40 pl-4">
                       {eventsDropdown.map((item) => (
                         <li key={item.href}>
-                          <Link href={item.href} className="text-white/70 hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileEvents(false) }}>
+                          <Link href={item.href} className="text-stone-800 font-medium hover:text-[#7ed957] transition-colors" onClick={() => { setMenuOpen(false); setMobileEvents(false) }}>
                             {item.label}
                           </Link>
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </div>
                 </li>
               )
 
@@ -451,7 +498,7 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-      )}
+      </div>
     </header>
   )
 }

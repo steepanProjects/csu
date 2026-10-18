@@ -52,7 +52,27 @@ export default function ExploreUs() {
     const side = i % 2 === 0 ? -1 : 1
     const tx = t > 0 ? side * t * 60 : 0   // in vw, fades to 0 as t→0
 
-    return `translate(${tx}vw, ${ty}vh)`
+    // Calculate scale and blur for cards moving up (t < 0)
+    let scale = 1
+    let blur = 0
+    
+    if (t < 0) {
+      // Shrink effect: starts when card is at center (t=0) until it's 30% past center (t=-0.3)
+      const shrinkProgress = Math.min(Math.abs(t) / 0.3, 1)
+      scale = 1 - (shrinkProgress * 0.15)
+      
+      // Blur effect: only starts when card reaches closer to the text (t < -0.5)
+      // This means blur starts later, when the card is much closer to "CSI Union Church" text
+      if (t < -0.5) {
+        const blurProgress = Math.min(Math.abs(t + 0.5) / 0.3, 1)
+        blur = blurProgress * 8
+      }
+    }
+
+    return {
+      transform: `translate(${tx}vw, ${ty}vh) scale(${scale})`,
+      filter: `blur(${blur}px)`,
+    }
   }
 
   // Active index for the dot indicator
@@ -140,40 +160,44 @@ export default function ExploreUs() {
 
         {/* ── Card stage — fills remaining height, overflow visible so corner entries show ── */}
         <div className="relative flex-1 overflow-visible max-w-3xl w-full mx-auto">
-          {slides.map((slide, i) => (
-            <div
-              key={i}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{
-                transform: getTransform(i),
-                willChange: 'transform',
-              }}
-            >
-              {/* 16:9 card */}
+          {slides.map((slide, i) => {
+            const transformData = getTransform(i)
+            return (
               <div
-                className={`relative w-full rounded-2xl overflow-hidden group ${slide.bg}`}
-                style={{ aspectRatio: '16/9' }}
+                key={i}
+                className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out"
+                style={{
+                  transform: transformData.transform,
+                  filter: transformData.filter,
+                  willChange: 'transform, filter',
+                }}
               >
-                {/* Decorative cross watermark */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-                  <span className="text-white text-9xl font-black select-none">✝</span>
-                </div>
+                {/* 16:9 card */}
+                <div
+                  className={`relative w-full rounded-2xl overflow-hidden group ${slide.bg}`}
+                  style={{ aspectRatio: '16/9' }}
+                >
+                  {/* Decorative cross watermark */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+                    <span className="text-white text-9xl font-black select-none">✝</span>
+                  </div>
 
-                {/* "Image Placeholder" badge */}
-                <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm rounded px-2 py-0.5">
-                  <span className="text-white text-[10px] font-medium">Image Placeholder</span>
-                </div>
+                  {/* "Image Placeholder" badge */}
+                  <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm rounded px-2 py-0.5">
+                    <span className="text-white text-[10px] font-medium">Image Placeholder</span>
+                  </div>
 
-                {/* Bottom label */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-6 py-5">
-                  <span className="text-white text-lg font-semibold">{slide.label}</span>
-                </div>
+                  {/* Bottom label */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-6 py-5">
+                    <span className="text-white text-lg font-semibold">{slide.label}</span>
+                  </div>
 
-                {/* Green accent bar */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#7ed957] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  {/* Green accent bar */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#7ed957] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Slide counter */}
