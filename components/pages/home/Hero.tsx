@@ -55,7 +55,7 @@ export default function Hero() {
         {/* CTA button */}
         <div className="mt-6 md:mt-8">
           <Link
-            href="/about"
+            href="/auth/login"
             className="inline-flex items-center gap-2.5 md:gap-3 rounded-full border-2 border-white/50 md:border-white/40 bg-white/15 md:bg-white/10 backdrop-blur-md px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/25 hover:border-white/80 hover:scale-105 shadow-lg"
           >
             <span className="flex h-6 w-6 md:h-7 md:w-7 items-center justify-center rounded-full bg-[#7ed957] text-white text-xs font-bold">
