@@ -9,7 +9,7 @@ export default function Hero() {
         backgroundImage: "url('/hero.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'scroll', // Changed to scroll for better mobile performance
+        backgroundAttachment: 'fixed', // Fixed background for parallax effect
       }}
     >
 
